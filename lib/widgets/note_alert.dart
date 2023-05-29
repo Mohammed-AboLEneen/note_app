@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'custom_textfield.dart';
+
 class WriteNoteContent extends StatelessWidget {
   final TextEditingController controller = TextEditingController();
 
@@ -9,45 +11,25 @@ class WriteNoteContent extends StatelessWidget {
   Widget build(BuildContext context) {
     return AlertDialog(
       backgroundColor: const Color(0xff303030),
+      insetPadding: EdgeInsets.zero,
       content: SizedBox(
-        width: 350,
+        width: 290,
         height: 350,
         child: Padding(
           padding: const EdgeInsets.only(top: 8.0),
           child: SingleChildScrollView(
             child: Column(
               children: [
-                TextField(
-                  textInputAction: TextInputAction.next,
-                  decoration: InputDecoration(
-                      hintText: 'Title',
-                      hintStyle: TextStyle(color: Colors.white.withOpacity(.5)),
-                      enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(20),
-                          borderSide:
-                              BorderSide(color: Colors.white.withOpacity(.5))),
-                      focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(20),
-                          borderSide: const BorderSide(color: Colors.teal))),
+                CustomTextField(
+                  hint: 'Title',
                 ),
-                const SizedBox(height: 15),
-                TextField(
-                  textInputAction: TextInputAction.next,
-                  controller: controller,
-                  textAlign: TextAlign.start,
-                  decoration: InputDecoration(
-                      contentPadding: const EdgeInsets.symmetric(
-                          horizontal: 20, vertical: 110.0),
-                      hintText: 'Content',
-                      hintStyle: TextStyle(color: Colors.white.withOpacity(.5)),
-                      enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(20),
-                          borderSide:
-                              BorderSide(color: Colors.white.withOpacity(.5))),
-                      focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(20),
-                          borderSide: const BorderSide(color: Colors.teal))),
+                const SizedBox(
+                  height: 20,
                 ),
+                CustomTextField(
+                    hint: 'Content',
+                    padding:
+                        const EdgeInsets.only(bottom: 200, top: 20, left: 10)),
               ],
             ),
           ),
