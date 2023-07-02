@@ -12,24 +12,24 @@ class WriteNoteContent extends StatelessWidget {
     return AlertDialog(
       backgroundColor: const Color(0xff303030),
       insetPadding: EdgeInsets.zero,
-      content: SizedBox(
+      content: const SizedBox(
         width: 290,
         height: 350,
         child: Padding(
-          padding: const EdgeInsets.only(top: 8.0),
+          padding: EdgeInsets.only(top: 8.0),
           child: SingleChildScrollView(
             child: Column(
               children: [
                 CustomTextField(
                   hint: 'Title',
                 ),
-                const SizedBox(
+                SizedBox(
                   height: 20,
                 ),
                 CustomTextField(
-                    hint: 'Content',
-                    padding:
-                        const EdgeInsets.only(bottom: 200, top: 20, left: 10)),
+                  hint: 'Content',
+                  maxLines: 8,
+                )
               ],
             ),
           ),

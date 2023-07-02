@@ -5,7 +5,7 @@ import '../widgets/note_item.dart';
 import '../widgets/search_icon.dart';
 
 class NoteView extends StatelessWidget {
-  NoteView({Key? key}) : super(key: key);
+  const NoteView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -34,8 +34,10 @@ class NoteView extends StatelessWidget {
             ),
             Expanded(
                 child: ListView.builder(
-              itemBuilder: (context, index) => ItemNote(),
-              itemCount: 10,
+
+                  padding: EdgeInsets.zero,
+                  itemBuilder: (context, index) => ItemNote(),
+                  itemCount: 10,
             ))
           ],
         ),
@@ -55,7 +57,3 @@ class NoteView extends StatelessWidget {
     );
   }
 }
-
-
-
-

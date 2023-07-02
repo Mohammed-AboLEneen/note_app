@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 
 class CustomTextField extends StatelessWidget {
+
   final String? hint;
   final EdgeInsetsGeometry? padding;
+  final int? maxLines;
 
-  CustomTextField({super.key, this.hint, this.padding});
+  const CustomTextField({super.key, this.hint, this.padding, this.maxLines});
 
   @override
   Widget build(BuildContext context) {
@@ -12,6 +14,7 @@ class CustomTextField extends StatelessWidget {
     return TextField(
       textInputAction: TextInputAction.next,
       textAlignVertical: TextAlignVertical.top,
+      maxLines: maxLines,
       style: TextStyle(
         color: Colors.white.withOpacity(.7), // Set the color of the text
       ),
