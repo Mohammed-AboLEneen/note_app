@@ -5,12 +5,14 @@ import 'package:note/note_cubit/note_cubit.dart';
 class ItemNote extends StatelessWidget {
   final int ind;
 
-  const ItemNote({super.key, required this.ind});
+  final listKey;
+
+  const ItemNote({super.key, required this.ind, required this.listKey});
 
   @override
   Widget build(BuildContext context) {
     return Card(
-        color: Color(BlocProvider.of<NoteCubit>(context).notes![ind].color),
+        color: Color(BlocProvider.of<NoteCubit>(context).notes[ind].color),
         child: Padding(
           padding: const EdgeInsets.only(
             left: 25,
@@ -24,14 +26,14 @@ class ItemNote extends StatelessWidget {
                 title: Padding(
                   padding: const EdgeInsets.only(bottom: 20.0, top: 25),
                   child: Text(
-                    BlocProvider.of<NoteCubit>(context).notes![ind].title,
+                    BlocProvider.of<NoteCubit>(context).notes[ind].title,
                     maxLines: 1,
                     style: const TextStyle(
                         fontSize: 25, overflow: TextOverflow.ellipsis),
                   ),
                 ),
                 subtitle: Text(
-                  BlocProvider.of<NoteCubit>(context).notes![ind].subTitle,
+                  BlocProvider.of<NoteCubit>(context).notes[ind].subTitle,
                   maxLines: 2,
                   style: TextStyle(
                       fontSize: 17,
@@ -42,7 +44,8 @@ class ItemNote extends StatelessWidget {
                   padding: const EdgeInsets.only(left: 3.0, bottom: 10),
                   child: IconButton(
                     onPressed: () {
-                      BlocProvider.of<NoteCubit>(context).deleteNote(ind);
+                      BlocProvider.of<NoteCubit>(context)
+                          .deleteNote(ind, listKey);
                     },
                     icon: const Icon(
                       Icons.delete,
@@ -55,7 +58,7 @@ class ItemNote extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.only(right: 7.0, top: 25, bottom: 5),
                 child: Text(
-                    BlocProvider.of<NoteCubit>(context).notes![ind].data,
+                    BlocProvider.of<NoteCubit>(context).notes[ind].data,
                     style: TextStyle(
                         fontSize: 15, color: Colors.black.withOpacity(.5))),
               )

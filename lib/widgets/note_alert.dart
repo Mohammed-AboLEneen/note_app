@@ -5,9 +5,8 @@ import '../add_cubit/add_cubit.dart';
 import 'custom_textfield.dart';
 
 class WriteNoteContent extends StatefulWidget {
-  final ScrollController scrollController;
 
-  const WriteNoteContent({super.key, required this.scrollController});
+  const WriteNoteContent({super.key});
 
   @override
   State<WriteNoteContent> createState() => _WriteNoteContentState();
@@ -63,9 +62,9 @@ class _WriteNoteContentState extends State<WriteNoteContent> {
             if (formKey.currentState!.validate()) {
               formKey.currentState?.save();
               BlocProvider.of<AddNoteCubit>(context).addNote(
-                  title: title,
-                  subtitle: subtitle,
-                  scrollController: widget.scrollController);
+                title: title,
+                subtitle: subtitle,
+              );
 
               Navigator.pop(context);
             } else {

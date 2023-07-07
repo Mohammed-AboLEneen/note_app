@@ -43,7 +43,7 @@ class MyApp extends StatelessWidget {
                   selectionHandleColor: Colors.teal,
                   selectionColor: Colors.white.withOpacity(.5)),
             ),
-            home: NoteView(),
+            home: const NoteView(),
             debugShowCheckedModeBanner: false,
           );
         },
