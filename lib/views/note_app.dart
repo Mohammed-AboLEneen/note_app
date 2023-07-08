@@ -24,24 +24,26 @@ class _NoteViewState extends State<NoteView> {
     var cubit = BlocProvider.of<NoteCubit>(context);
     return Scaffold(
       backgroundColor: const Color(0xff303030),
-      body: Padding(
-        padding: const EdgeInsets.all(15.0),
-        child: Column(
+      body: Stack(children: [
+        Column(
           children: [
             const SizedBox(
               height: 40,
             ),
-            const Row(children: [
-              Text(
-                'Notes',
-                style: TextStyle(
-                    fontSize: 20,
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold),
-              ),
-              Spacer(),
-              IconSearch(),
-            ]),
+            const Padding(
+              padding: EdgeInsets.all(15.0),
+              child: Row(children: [
+                Text(
+                  'Notes',
+                  style: TextStyle(
+                      fontSize: 20,
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold),
+                ),
+                Spacer(),
+                IconSearch(),
+              ]),
+            ),
             const SizedBox(
               height: 10,
             ),
@@ -61,42 +63,139 @@ class _NoteViewState extends State<NoteView> {
             )
           ],
         ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          showDialog(
-            context: context,
-            builder: (BuildContext context) {
-              return BlocProvider(
-                create: (context) => AddNoteCubit(),
-                child: BlocListener<AddNoteCubit, AddNoteStates>(
-                  listener: (context, state) {
-                    if (state is SuccessAddNoteState) {
-                      BlocProvider.of<NoteCubit>(context).reBuildAgain(context);
-                      _listKey.currentState?.insertItem(
-                          BlocProvider.of<NoteCubit>(context).notes.length - 1,
-                          duration: const Duration(milliseconds: 500));
+        Positioned(
+            bottom: 0,
+            child: SizedBox(
+              height: 200,
+              width: MediaQuery.of(context).size.width,
+              child: Stack(
+                children: [
+                  Positioned(
+                      bottom: 0,
+                      child: SizedBox(
+                        height: 60,
+                        child: CustomPaint(
+                          size: Size(MediaQuery.of(context).size.width,
+                              MediaQuery.of(context).size.height),
+                          painter: BBNNCustomPaint(),
+                        ),
+                      )),
+                  Positioned(
+                    right: 40,
+                    bottom: 25,
+                    child: Material(
+                      borderRadius: BorderRadius.circular(40),
+                      clipBehavior: Clip.antiAliasWithSaveLayer,
+                      child: InkWell(
+                          splashColor: Colors.grey,
+                          onTap: () {
+                            showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return BlocProvider(
+                                  create: (context) => AddNoteCubit(),
+                                  child:
+                                      BlocListener<AddNoteCubit, AddNoteStates>(
+                                    listener: (context, state) {
+                                      if (state is SuccessAddNoteState) {
+                                        BlocProvider.of<NoteCubit>(context)
+                                            .reBuildAgain(context);
+                                        _listKey.currentState?.insertItem(
+                                            BlocProvider.of<NoteCubit>(context)
+                                                    .notes
+                                                    .length -
+                                                1,
+                                            duration: const Duration(
+                                                milliseconds: 500));
 
-                      _scrollController.animateTo(
-                        _scrollController.position.maxScrollExtent,
-                        duration: const Duration(milliseconds: 1000),
-                        curve: Curves.easeOut,
-                      );
-                    }
-                  },
-                  child: WriteNoteContent(),
-                ),
-              );
-            },
-          );
-        },
-        backgroundColor: const Color(0xff52EFD8),
-        child: const Icon(
-          Icons.add,
-          size: 30,
-          color: Colors.white,
-        ),
-      ),
+                                        _scrollController.animateTo(
+                                          _scrollController
+                                              .position.maxScrollExtent,
+                                          duration: const Duration(
+                                              milliseconds: 1000),
+                                          curve: Curves.easeOut,
+                                        );
+                                      }
+                                    },
+                                    child: WriteNoteContent(),
+                                  ),
+                                );
+                              },
+                            );
+                          },
+                          child: Container(
+                            height: 65,
+                            width: 65,
+                            color: Colors.teal.withOpacity(.8),
+                            child: const Icon(
+                              Icons.add,
+                              size: 30,
+                            ),
+                          )),
+                    ),
+                  ),
+                ],
+              ),
+            ))
+      ]),
+      // floatingActionButton: FloatingActionButton(
+      //   onPressed: () {
+      //     showDialog(
+      //       context: context,
+      //       builder: (BuildContext context) {
+      //         return BlocProvider(
+      //           create: (context) => AddNoteCubit(),
+      //           child: BlocListener<AddNoteCubit, AddNoteStates>(
+      //             listener: (context, state) {
+      //               if (state is SuccessAddNoteState) {
+      //                 BlocProvider.of<NoteCubit>(context).reBuildAgain(context);
+      //                 _listKey.currentState?.insertItem(
+      //                     BlocProvider.of<NoteCubit>(context).notes.length - 1,
+      //                     duration: const Duration(milliseconds: 500));
+      //
+      //                 _scrollController.animateTo(
+      //                   _scrollController.position.maxScrollExtent,
+      //                   duration: const Duration(milliseconds: 1000),
+      //                   curve: Curves.easeOut,
+      //                 );
+      //               }
+      //             },
+      //             child: WriteNoteContent(),
+      //           ),
+      //         );
+      //       },
+      //     );
+      //   },
+      //   backgroundColor: const Color(0xff52EFD8),
+      //   child: const Icon(
+      //     Icons.add,
+      //     size: 30,
+      //     color: Colors.white,
+      //   ),
+      // ),
     );
+  }
+}
+
+class BBNNCustomPaint extends CustomPainter {
+  @override
+  void paint(Canvas canvas, Size size) {
+    Paint paint = Paint()..color = Colors.grey.withOpacity(.4);
+
+    Path path = Path();
+    // Draws a line from left top corner to right bottom
+    path.lineTo(size.width * .694, 0);
+    path.arcToPoint(Offset(size.width * .9, 0),
+        clockwise: false, radius: Radius.circular(20));
+    path.lineTo(size.width, 0);
+    path.lineTo(size.width, size.height);
+    path.lineTo(0, size.height);
+
+    canvas.drawPath(path, paint);
+  }
+
+  @override
+  bool shouldRepaint(covariant CustomPainter oldDelegate) {
+    return false;
   }
 }
