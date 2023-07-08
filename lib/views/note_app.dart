@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:note/add_cubit/add_cubit.dart';
 import 'package:note/note_cubit/note_cubit.dart';
 
-import '../add_cubit/add_state.dart';
 import '../widgets/custom_paint.dart';
-import '../widgets/note_alert.dart';
+import '../widgets/ink_button.dart';
 import '../widgets/note_item.dart';
 import '../widgets/search_icon.dart';
 
@@ -87,52 +85,10 @@ class _NoteViewState extends State<NoteView> {
                     child: Material(
                       borderRadius: BorderRadius.circular(40),
                       clipBehavior: Clip.antiAliasWithSaveLayer,
-                      child: InkWell(
-                          splashColor: Colors.grey,
-                          onTap: () {
-                            showDialog(
-                              context: context,
-                              builder: (BuildContext context) {
-                                return BlocProvider(
-                                  create: (context) => AddNoteCubit(),
-                                  child:
-                                      BlocListener<AddNoteCubit, AddNoteStates>(
-                                    listener: (context, state) {
-                                      if (state is SuccessAddNoteState) {
-                                        BlocProvider.of<NoteCubit>(context)
-                                            .reBuildAgain(context);
-                                        _listKey.currentState?.insertItem(
-                                            BlocProvider.of<NoteCubit>(context)
-                                                    .notes
-                                                    .length -
-                                                1,
-                                            duration: const Duration(
-                                                milliseconds: 500));
-
-                                        _scrollController.animateTo(
-                                          _scrollController
-                                              .position.maxScrollExtent,
-                                          duration: const Duration(
-                                              milliseconds: 1000),
-                                          curve: Curves.easeOut,
-                                        );
-                                      }
-                                    },
-                                    child: WriteNoteContent(),
-                                  ),
-                                );
-                              },
-                            );
-                          },
-                          child: Container(
-                            height: 65,
-                            width: 65,
-                            color: Colors.teal.withOpacity(.8),
-                            child: const Icon(
-                              Icons.add,
-                              size: 30,
-                            ),
-                          )),
+                      child: InkButton(
+                        listKey: _listKey,
+                        scrollController: _scrollController,
+                      ),
                     ),
                   ),
                 ],
