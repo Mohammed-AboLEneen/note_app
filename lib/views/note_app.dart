@@ -81,7 +81,7 @@ class _NoteViewState extends State<NoteView> {
                       )),
                   Positioned(
                     right: 40,
-                    bottom: 25,
+                    bottom: 27,
                     child: Material(
                       borderRadius: BorderRadius.circular(40),
                       clipBehavior: Clip.antiAliasWithSaveLayer,

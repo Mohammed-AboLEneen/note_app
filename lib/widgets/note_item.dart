@@ -14,8 +14,7 @@ class ItemNote extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 5.0),
       child: Card(
-          color: Colors.orangeAccent,
-          // Color(BlocProvider.of<NoteCubit>(context).notes[ind].color),
+          color: Color(BlocProvider.of<NoteCubit>(context).notes[ind].color),
           child: Padding(
             padding: const EdgeInsets.only(
               left: 25,

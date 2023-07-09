@@ -89,6 +89,10 @@ flutter:
       fonts:
         - asset: assets/fonts/Poppins-Regular.ttf
 
+    - family: Abel
+      fonts:
+        - asset: assets/fonts/Abel-Regular.ttf
+
   #   - family: Trajan Pro
   #     fonts:
   #       - asset: fonts/TrajanPro.ttf

@@ -22,23 +22,25 @@ class InkButton extends StatelessWidget {
             builder: (BuildContext context) {
               return BlocProvider(
                 create: (context) => AddNoteCubit(),
-                child: BlocListener<AddNoteCubit, AddNoteStates>(
-                  listener: (context, state) {
-                    if (state is SuccessAddNoteState) {
-                      BlocProvider.of<NoteCubit>(context).reBuildAgain(context);
-                      listKey.currentState?.insertItem(
-                          BlocProvider.of<NoteCubit>(context).notes.length - 1,
-                          duration: const Duration(milliseconds: 500));
+                child: BlocConsumer<AddNoteCubit, AddNoteStates>(
+                    listener: (context, state) {
+                  if (state is SuccessAddNoteState) {
+                    BlocProvider.of<NoteCubit>(context).reBuildAgain(context);
+                    listKey.currentState?.insertItem(
+                        BlocProvider.of<NoteCubit>(context).notes.length - 1,
+                        duration: const Duration(milliseconds: 500));
 
-                      scrollController.animateTo(
-                        scrollController.position.maxScrollExtent,
-                        duration: const Duration(milliseconds: 1000),
-                        curve: Curves.easeOut,
-                      );
-                    }
-                  },
-                  child: WriteNoteContent(),
-                ),
+                    scrollController.animateTo(
+                      scrollController.position.maxScrollExtent,
+                      duration: const Duration(milliseconds: 1000),
+                      curve: Curves.easeOut,
+                    );
+                  }
+
+                  print('lolo');
+                }, builder: (context, state) {
+                  return const WriteNoteContent();
+                }),
               );
             },
           );
