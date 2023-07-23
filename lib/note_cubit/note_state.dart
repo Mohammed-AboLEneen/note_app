@@ -5,3 +5,5 @@ class InitFetchNoteState extends NoteStates {}
 class AddAndFetchState extends NoteStates {}
 
 class RemoveAndFetchState extends NoteStates {}
+
+class ChangeTheBackgroundColorState extends NoteStates {}

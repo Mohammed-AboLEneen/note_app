@@ -38,10 +38,6 @@ class MyApp extends StatelessWidget {
                   primary: Colors.white, onPrimary: Colors.white),
               useMaterial3: true,
               fontFamily: 'Poppins',
-              textSelectionTheme: TextSelectionThemeData(
-                  cursorColor: Colors.white,
-                  selectionHandleColor: Colors.teal,
-                  selectionColor: Colors.white.withOpacity(.5)),
             ),
             home: const NoteView(),
             debugShowCheckedModeBanner: false,

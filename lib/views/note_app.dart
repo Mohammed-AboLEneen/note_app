@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:note/note_cubit/note_cubit.dart';
@@ -56,7 +58,13 @@ class _NoteViewState extends State<NoteView> {
                   return SlideTransition(
                       position: animation.drive(Tween<Offset>(
                           begin: const Offset(-1, 0), end: const Offset(0, 0))),
-                      child: ItemNote(ind: index, listKey: _listKey));
+                      child: Dismissible(
+                          key: Key('$index'),
+                          onDismissed: (direction) {
+                            BlocProvider.of<NoteCubit>(context)
+                                .deleteNote(index);
+                          },
+                          child: ItemNote(ind: index)));
                 },
               ),
             )
@@ -72,16 +80,23 @@ class _NoteViewState extends State<NoteView> {
                   Positioned(
                       bottom: 0,
                       child: SizedBox(
-                        height: 60,
-                        child: CustomPaint(
-                          size: Size(MediaQuery.of(context).size.width,
-                              MediaQuery.of(context).size.height),
-                          painter: BBNNCustomPaint(),
+                        height: 40,
+                        child: ClipPath(
+                          clipper: BBNNClipper(),
+                          child: SizedBox(
+                            width: MediaQuery.of(context).size.width,
+                            child: BackdropFilter(
+                              filter: ImageFilter.blur(sigmaX: 3, sigmaY: 3),
+                              child: Container(
+                                color: Colors.grey.withOpacity(.5),
+                              ),
+                            ),
+                          ),
                         ),
                       )),
                   Positioned(
-                    right: 40,
-                    bottom: 27,
+                    left: MediaQuery.of(context).size.width * .75,
+                    bottom: MediaQuery.of(context).size.width * .07,
                     child: Material(
                       borderRadius: BorderRadius.circular(40),
                       clipBehavior: Clip.antiAliasWithSaveLayer,
@@ -98,4 +113,3 @@ class _NoteViewState extends State<NoteView> {
     );
   }
 }
-

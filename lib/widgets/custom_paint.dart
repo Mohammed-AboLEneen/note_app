@@ -1,24 +1,32 @@
 import 'package:flutter/material.dart';
 
-class BBNNCustomPaint extends CustomPainter {
+class BBNNClipper extends CustomClipper<Path> {
   @override
-  void paint(Canvas canvas, Size size) {
-    Paint paint = Paint()..color = Colors.grey.withOpacity(.4);
-
+  Path getClip(Size size) {
+    print(size.width);
+    print(size.height);
     Path path = Path();
-    // Draws a line from left top corner to right bottom
-    path.lineTo(size.width * .694, 0);
-    path.arcToPoint(Offset(size.width * .9, 0),
-        clockwise: false, radius: Radius.circular(20));
+    path.lineTo(size.width * 0.74, 0);
+    path.arcToPoint(
+      Offset(size.width * 0.92, 0),
+      clockwise: false,
+      radius: const Radius.circular(35),
+    );
     path.lineTo(size.width, 0);
     path.lineTo(size.width, size.height);
     path.lineTo(0, size.height);
-
-    canvas.drawPath(path, paint);
+    return path;
   }
 
   @override
-  bool shouldRepaint(covariant CustomPainter oldDelegate) {
+  void paint(Canvas canvas, Size size) {
+    Paint paint = Paint()..color = Colors.grey;
+    canvas.drawPath(getClip(size), paint);
+    canvas.save();
+  }
+
+  @override
+  bool shouldReclip(covariant CustomClipper<Path> oldClipper) {
     return false;
   }
 }

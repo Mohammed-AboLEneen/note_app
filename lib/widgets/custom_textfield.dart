@@ -29,7 +29,7 @@ class CustomTextField extends StatelessWidget {
         controller: controller,
         maxLines: maxLines,
         style: TextStyle(
-            color: Colors.black.withOpacity(.6), // Set the color of the text
+            color: Colors.white.withOpacity(.8), // Set the color of the text
             fontFamily: 'Abel'),
         decoration: InputDecoration(
             hintText: hint,

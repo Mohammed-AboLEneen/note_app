@@ -46,9 +46,13 @@ class InkButton extends StatelessWidget {
           );
         },
         child: Container(
-          height: 65,
-          width: 65,
-          color: Colors.teal.withOpacity(.8),
+          height: 58,
+          width: 58,
+          decoration: const BoxDecoration(
+              gradient: LinearGradient(
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                  colors: [Colors.teal, Colors.tealAccent, Colors.cyan])),
           child: const Icon(
             Icons.add,
             size: 30,

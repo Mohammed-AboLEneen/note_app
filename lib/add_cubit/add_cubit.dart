@@ -13,19 +13,19 @@ class AddNoteCubit extends Cubit<AddNoteStates> {
   AddNoteCubit get(context) => BlocProvider.of<AddNoteCubit>(context);
 
   late NoteModel newNote;
-  late int color = Colors.blueGrey.value;
+  int color = Colors.blueGrey.value;
+  int selectedColorIndex = 0;
 
-  void addNote(
-      {required String title,
-      required String subtitle,
-      required int color}) async {
+  void addNote({
+    required String title,
+    required String subtitle,
+  }) async {
     var hiveBox = Hive.box<NoteModel>(noteBox);
 
     var note = NoteModel(
         title: title,
         subTitle: subtitle,
-        data:
-            DateFormat('yyyy-MM-dd HH:mm:ss').format(DateTime.now()).toString(),
+        date: DateFormat('yyyy-MM-dd HH:mm').format(DateTime.now()).toString(),
         color: color);
 
     int key = await hiveBox.add(note);
@@ -36,8 +36,10 @@ class AddNoteCubit extends Cubit<AddNoteStates> {
     emit(SuccessAddNoteState());
   }
 
-  void changeTheColorOfAddScreen(int comingColor) {
-    color = comingColor;
+  void changeTheColorIndex(int index, int selectedColor) {
+    selectedColorIndex = index;
+    color = selectedColor;
+
     emit(ChangeTheBackgroundColorState());
   }
 }
